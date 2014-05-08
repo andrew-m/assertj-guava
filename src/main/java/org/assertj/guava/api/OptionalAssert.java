@@ -124,7 +124,7 @@ public class OptionalAssert<T> extends AbstractAssert<OptionalAssert<T>, Optiona
    return this;
   }
   /**
-   * Verifies that the actual {@link Optional} equals another {@link Optional} instance.<br>
+   * Verifies that the actual {@link Optional} equals expected {@link Optional} instance.<br>
    * <p>
    * Example :
    *
@@ -132,7 +132,7 @@ public class OptionalAssert<T> extends AbstractAssert<OptionalAssert<T>, Optiona
    * Optional&lt;String&gt; optional = Optional.of(&quot;value&quot;);
    * Optional&lt;String&gt; equalOptional = Optional.of(&quot;value&quot;);
    *
-   * assertThat(optional).equals(equaleOptional);
+   * assertThat(optional).equals(equalOptional);
    * </pre><br>
    *
    * Or :
@@ -141,15 +141,19 @@ public class OptionalAssert<T> extends AbstractAssert<OptionalAssert<T>, Optiona
    * Optional&lt;String&gt; optional = Optional.absent();
    * Optional&lt;String&gt; equalOptional = Optional.absent();
    *
-   * assertThat(optional).equals(equaleOptional);
+   * assertThat(optional).equals(equalOptional);
    * </pre>
    *
    * @return this {@link OptionalAssert} for assertions chaining.
    *
    * @throws AssertionError if the actual {@link Optional} is {@code null}.
-   * @throws AssertionError if the actual {@link Optional} contains a null instance.
+   * @throws AssertionError if the expected {@link Optional} is {@code null}.
+   * @throws AssertionError if the actual {@link Optional} is absent while the expected value contains a (non null) instance.
+   * @throws AssertionError if the actual {@link Optional} contains a (non null) instance while the expected value is absent.
    */
    public OptionalAssert<T> isEqualTo(Optional<T> expected){
+      Objects.instance().assertNotNull(info, actual);
+//      Objects.instance().assertNotNull(info, expected); //Not sure of the correct error message in this case.
       if (!expected.isPresent() && actual.isPresent()){
          throw failures.failure(info, shouldBeAbsent(actual));
       }

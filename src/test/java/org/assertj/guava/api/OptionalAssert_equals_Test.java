@@ -1,8 +1,10 @@
 package org.assertj.guava.api;
 
 import com.google.common.base.Optional;
+import org.junit.Ignore;
 import org.junit.Test;
 
+import static org.assertj.core.util.FailureMessages.actualIsNull;
 import static org.assertj.guava.api.Assertions.assertThat;
 
 public class OptionalAssert_equals_Test extends BaseTest {
@@ -52,5 +54,28 @@ public class OptionalAssert_equals_Test extends BaseTest {
                 "\nExpecting Optional to contain value \n<\"X\">\n but contained \n<\"Y\">");
         // when
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    public void should_fail_if_actual_is_null() throws Exception {
+        // given
+        Optional<String> expected = Optional.fromNullable("X");
+        Optional<String> actual = null;
+        // expect
+        expectException(AssertionError.class, actualIsNull());
+        // when
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    @Ignore("Not yet sure of the error message if the expected/value is null.")
+    public void should_fail_if_expected_is_null() throws Exception {
+        // given
+        Optional<String> actual = Optional.fromNullable("X");
+        // expect
+        expectException(AssertionError.class,
+                "\nExpected Optional was null");
+        // when
+        assertThat(actual).isEqualTo(null);
     }
 }
