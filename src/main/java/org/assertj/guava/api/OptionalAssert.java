@@ -1,4 +1,4 @@
-/**
+  /**
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
  * 
@@ -123,6 +123,7 @@ public class OptionalAssert<T> extends AbstractAssert<OptionalAssert<T>, Optiona
    }
    return this;
   }
+
   /**
    * Verifies that the actual {@link Optional} equals expected {@link Optional} instance.<br>
    * <p>
@@ -151,22 +152,22 @@ public class OptionalAssert<T> extends AbstractAssert<OptionalAssert<T>, Optiona
    * @throws AssertionError if the actual {@link Optional} is absent while the expected value contains a (non null) instance.
    * @throws AssertionError if the actual {@link Optional} contains a (non null) instance while the expected value is absent.
    */
-   public OptionalAssert<T> isEqualTo(Optional<T> expected){
-      Objects.instance().assertNotNull(info, actual);
-//      Objects.instance().assertNotNull(info, expected); //Not sure of the correct error message in this case.
-      if (!expected.isPresent() && actual.isPresent()){
-         throw failures.failure(info, shouldBeAbsent(actual));
-      }
-      if (expected.isPresent() && !actual.isPresent()){
-         throw failures.failure(info, shouldBePresent(actual));
-      }
-      if (actual.isPresent() && expected.isPresent()){
-         T actualValue = actual.get();
-         T expectedValue = expected.get();
-         if (!actualValue.equals(expectedValue)){
-            throw failures.failure(info, shouldBePresentWithValue(actual, expectedValue));
-         }
-      }
-      return this;
+  public OptionalAssert<T> isEqualTo(Optional<T> expected) {
+   Objects.instance().assertNotNull(info, actual);
+   Objects.instance().assertNotNull(info, expected); //Not sure of the correct error message in this case.
+   if (!expected.isPresent() && actual.isPresent()){
+     throw failures.failure(info, shouldBeAbsent(actual));
    }
+   if (expected.isPresent() && !actual.isPresent()){
+     throw failures.failure(info, shouldBePresent(actual));
+   }
+   if (actual.isPresent() && expected.isPresent()){
+     T actualValue = actual.get();
+     T expectedValue = expected.get();
+     if (!actualValue.equals(expectedValue)){
+       throw failures.failure(info, shouldBePresentWithValue(actual, expectedValue));
+     }
+   }
+   return this;
+  }
 }
