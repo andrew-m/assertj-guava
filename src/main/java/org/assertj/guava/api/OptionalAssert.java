@@ -154,7 +154,9 @@ public class OptionalAssert<T> extends AbstractAssert<OptionalAssert<T>, Optiona
    */
   public OptionalAssert<T> isEqualTo(Optional<T> expected) {
    Objects.instance().assertNotNull(info, actual);
-   Objects.instance().assertNotNull(info, expected); //Not sure of the correct error message in this case.
+   if(expected == null){
+     failWithMessage("\nExpected Optional was null", expected);
+   }
    if (!expected.isPresent() && actual.isPresent()){
      throw failures.failure(info, shouldBeAbsent(actual));
    }

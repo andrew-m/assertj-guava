@@ -68,7 +68,6 @@ public class OptionalAssert_equals_Test extends BaseTest {
   }
 
   @Test
-  @Ignore("Not yet sure of the error message if the expected/value is null.")
   public void should_fail_if_expected_is_null() throws Exception {
    // given
    Optional<String> actual = Optional.fromNullable("X");
